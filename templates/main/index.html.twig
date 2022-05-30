@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container">
+        <section class="row">
+            <div class="col-12">
+                <h1>Site e-commerce</h1>
+                <p>Bienvenue dans notre boutique</p>            
+            </div>
+            {% if app.user %}
+            {% for category in categories %}
+                    <div class="col-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ category.name }}</h3>
+                                <a href="{{ path('categories_list', {slug: category.slug}) }}" class="btn btn-primary">Voir les produits</a>
+                            </div>
+                        </div>
+                    </div>    
+            {% endfor %}
+            {% else %}
+                    <a class="btn btn-primary" href="{{ path('app_register') }}">M'inscrire</a>
+                <h4>OU</h4>
+                    <a class="btn btn-primary" href="{{ path('app_login') }}">Me Connecter</a>
+            {% endif %}
+
+        </section>
+    </main>
+{% endblock %}
