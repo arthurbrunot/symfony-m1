@@ -45,6 +45,9 @@
                                    <div class="card-body bg-primary text-white">
                                        <h5 class="card-title m-0"><b>Total  : </b>{{ order.getTotal }} €</h5>
                                    </div>
+                                   {% if order.facture  %}
+                                       <a class="btn btn-primary my-3" href="{{ order.facture }}" target="_blank">Téléchargez la facture</a>
+                                   {% endif %}
                                </div>
                            </div>
                        </article>

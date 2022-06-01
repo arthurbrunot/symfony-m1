@@ -1,18 +1,82 @@
-# E-commerce Symfony 6
+# Projet Symfony M1 ESGI 2022
 
-Site e-commerce créé avec Symfony 6dans une série de tutoriels présents sur la chaîne Nouvelle-Techno.fr à cette adresse : https://www.youtube.com/playlist?list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM
+Ce projet a été réalisé par Arthur BRUNOT - M1 IW ESGI Lyon
+Il s'agit d'une application Symfony utilisant une base de donnée PostgreSQL
 
-## Base de données
-Vous trouverez le schéma de base de données ici : https://dbdiagram.io/d/61643981940c4c4eec8f40a5
+## Installation
 
-## Chapitres
+Afin de lancer l'application, veuillez suivre ces étapes :
 
-1. [Installation de Symfony](https://www.youtube.com/watch?v=kuKb3VfcTWE&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM)
-2. [Présentation et configuration du projet](https://www.youtube.com/watch?v=kpSYFMV4eJc&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/66945f03393e89a400a2e4bf903a5707f0e826ae))
-3. [Création de la base de données](https://www.youtube.com/watch?v=MhVAwrujifQ&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/8aac3b89650ec88dfbdcbee5b3be3ad3a0490e6e))
-4. [Templates twig](https://www.youtube.com/watch?v=aqw1bgitDcE&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/2708a3828d31a1a62db1351ec3c3305a93398f24))
-5. [Inscription et authentification](https://www.youtube.com/watch?v=INfHFDIjgrw&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/b6b05e5b7f6a22536a7c8a42581c028c453db431))
-6. [Optimisation des entités et DataFixtures](https://www.youtube.com/watch?v=JVVeBiewhNg&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/0a0c4ecb0dbc945abaf9515ea4d560eb5e0b4650))
-7. [Création des contrôleurs](https://www.youtube.com/watch?v=X_mNHTGJb5M&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/211cf1fa951afc7f7d127b4dd82fd1504918464d))
-8. [Intégrer les données dans les vues](https://www.youtube.com/watch?v=OG-ALaraXoo&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/66484fc5e7157942206e650a08ebd3a7904a7ae1))
-9. [Vérifier l'adresse e-mail de l'utilisateur](https://www.youtube.com/watch?v=UrJUn2EL07U&list=PLBq3aRiVuwyzI0MT4LhvwqkVenz5pF_DM) ([Github](https://github.com/NouvelleTechno/e-commerce-Symfony-6/tree/996e9e06990f27560f45185f2be1fbda01a28dfa))
+### Prérequis
+
+1. Docker et docker-compose installés sur votre machine
+2. PHP installé sur votre machine
+3. Composer installé sur votre machine
+
+### Mise en place du serveur
+- Pour lancer la base de données lancez : `docker-compose up -d`, un conteneur docker sera créé.
+- Pour installer les dépendances lancez la commande : `composer install`
+- Pour lancer le serveur PHP lancez : `symfony server:start`
+- Afin de créer les tables dans la base de données tapez : `php bin/console doctrine:migrations:migrate`
+- Pour charger les fixtures tapez `php bin/console doctrine:fixtures:load`
+- L'application est disponible à `http://127.0.0.1:8000/`
+
+## Identification
+
+Par défaut un utilisateur admin est créé :
+
+email : `admin@demo.fr`
+mot de passe : `admin`
+
+Ce compte permettra de consulter les commandes et de modifier les catalogues
+
+Pour vous connecter en temps qu'utilisateur final, veuillez créer un compte en acédant à l'application
+
+## PHPCS
+
+CodeSniffer est intégré à l'application pour analyser et nettoyer le code
+
+Pour lancer la correction du code, lancez la commande :`composer phpcs`
+
+## Fonctionnalités
+### Pour EuroPlant
+L'application permet de gérer de catalogue et d'enregistrer / gérer des commandes sur un même outil
+
+- Ajouter plusieurs catalogues à l'application
+- Ajouter des produits ( Nom, descriptif, prix et image ) à un catalogue
+- Afficher l'ensemble des commandes et le détail de celles-ci sur un espace sécurisé
+- Ajouter une facture à une commande
+
+### Pour le client
+L'application permet de parcourir facilement les catalogues d'EuroPlant et de commander des produits, le client a également accès aux factures des commandes
+
+- Naviguer dans les catalogues du fournisseur
+- Accès à un espace sécurisé
+- Ajouter des produits au panier
+- Passer et visualiser une commande
+- Télécharger une facture liée à une commande ( si disponible ).
+
+## Fonctionnalités futures
+
+### Gérer l'envoie de mail / sms en fonction des intéractions avec l'application :
+
+Je suggère l'utilisation d'une plateforme marketing AIO du type SendInBlue. La plateforme possède une api facile d'utilisation pour répondre à ce besoin. Des librairies comme [celle-ci](https://github.com/symfony/sendinblue-mailer "celle-ci") peuvent être utilisées
+
+### Permettre aux clients d’intégrer le système de commande dans leur SI
+
+Si le SI d'EuroPlant possède une api il est parfaitement possible de connecter cette application à celle-ci afin de synchroniser les données.
+
+### Paiement en ligne
+
+Je suggère l'utilisation de Stripe et Paypal. Ces deux leaders du paiement en ligne possède des librairies destinées à PHP
+
+### Internationalisation : proposer l’application à des clients allemands et belges
+
+L'application peut parfaitement prendre en charge une traduction vers plusieurs langues, nous pouvons utiliser les fonctionnalités natives de symfony [expliquées ici](https://symfony.com/doc/current/translation.html "expliquées ici")
+
+### Génération automatique des factures
+Les factures peuvent être auto-générées par l'application à partir des entrées en BDD, des outils comme https://csv.thephpleague.com/ peuvent simplifier la tâche.
+
+### Formulaires de satisfaction clients
+
+En adéquation avec l'intégration d'une plateforme d'email et SMS, nous pouvons envoyer des formulaires de satisfaction client X jours après le passage d'une commande.
