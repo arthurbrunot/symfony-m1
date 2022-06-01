@@ -117,26 +117,17 @@ class AdminController extends AbstractController
             /** @var UploadedFile $facture */
             $facture = $form->get('facture')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
             if ($facture) {
                 $originalFilename = pathinfo($facture->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $facture->guessExtension();
-
-                // Move the file to the directory where brochures are stored
                 try {
                     $facture->move(
                         $this->getParameter('factures_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
                 }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
                 $order->setFacture($newFilename);
                 $entityManager->persist($order);
                 $entityManager->flush();

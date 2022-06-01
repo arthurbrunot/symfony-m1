@@ -62,7 +62,6 @@ class Order
     public function addItem(OrderItem $item): self
     {
         foreach ($this->getItems() as $existingItem) {
-            // The item already exists, update the quantity
             if ($existingItem->equals($item)) {
                 $existingItem->setQuantity(
                     $existingItem->getQuantity() + $item->getQuantity()
@@ -81,7 +80,6 @@ class Order
     public function removeItem(OrderItem $item): self
     {
         if ($this->items->removeElement($item)) {
-            // set the owning side to null (unless already changed)
             if ($item->getOrderRef() === $this) {
                 $item->setOrderRef(null);
             }

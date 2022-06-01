@@ -16,7 +16,6 @@ class ProductsFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // use the factory to create a Faker\Generator instance
         $faker = Faker\Factory::create('fr_FR');
 
         for ($prod = 1; $prod <= 50; ++$prod) {
@@ -28,7 +27,6 @@ class ProductsFixtures extends Fixture
             $product->setStock($faker->numberBetween(0, 10));
             $product->addImage('https://picsum.photos/id/' . $prod . '/640/360');
 
-            // On va chercher une référence de catégorie
             $category = $this->getReference('cat-' . rand(1, 8));
             $product->setCategories($category);
 
