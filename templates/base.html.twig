@@ -18,15 +18,8 @@
 	</head>
 	<body>
         {% include "_partials/_nav.html.twig" %}
-        
-		{% if app.user and app.user.isVerified == false %}
-			<div class="alert alert-warning alert-dismissible" role="alert">
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				<div class="alert-message">
-					<strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
-				</div>
-			</div>
-		{% endif %}
+
+		<div class="container-fluid" style="height: 300px; background-size: cover; background-position: center; background-image: url({{asset('images/hero.jpg')}})"></div>
 
 		{% include "_partials/_flash.html.twig" %}
 		

@@ -21,13 +21,13 @@ class Products
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    public $name;
 
     #[ORM\Column(type: 'text')]
-    private $description;
+    public $description;
 
     #[ORM\Column(type: 'integer')]
-    private $price;
+    public $price;
 
     #[ORM\Column(type: 'integer')]
     private $stock;
@@ -36,8 +36,8 @@ class Products
     #[ORM\JoinColumn(nullable: false)]
     private $categories;
 
-    #[ORM\OneToMany(mappedBy: 'products', targetEntity: Images::class, orphanRemoval: true)]
-    private $images;
+    #[ORM\Column(type: 'text')]
+    public string $image;
 
     public function __construct()
     {
@@ -110,32 +110,15 @@ class Products
         return $this;
     }
 
-    /**
-     * @return Collection|Images[]
-     */
-    public function getImages(): Collection
+    public function getImage(): ?string
     {
-        return $this->images;
+        return $this->image;
     }
 
-    public function addImage(Images $image): self
+    public function addImage(string $image): self
     {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setProducts($this);
-        }
+        $this->image = $image;
 
-        return $this;
-    }
-
-    public function removeImage(Images $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getProducts() === $this) {
-                $image->setProducts(null);
-            }
-        }
 
         return $this;
     }

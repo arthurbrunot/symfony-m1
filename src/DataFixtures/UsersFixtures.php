@@ -30,6 +30,7 @@ class UsersFixtures extends Fixture
         );
         $admin->setRoles(['ROLE_ADMIN']);
 
+
         $manager->persist($admin);
 
         $faker = Faker\Factory::create('fr_FR');

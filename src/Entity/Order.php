@@ -16,8 +16,6 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'integer')]
-    public ?int $userId;
 
     #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, cascade: ["persist", "remove"], orphanRemoval: true)]
     private $items;
@@ -38,6 +36,13 @@ class Order
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\ManyToOne(targetEntity: Users::class, inversedBy: 'orders')]
+    private $attachedUser;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $facture;
+
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -48,16 +53,6 @@ class Order
         return $this->id;
     }
 
-    public function getUserId(): ?int
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(int $userId): self
-    {
-        $this->userId = $userId;
-        return $this;
-    }
 
     /**
      * @return Collection|OrderItem[]
@@ -160,5 +155,29 @@ class Order
         }
 
         return $total;
+    }
+
+    public function getAttachedUser(): ?Users
+    {
+        return $this->attachedUser;
+    }
+
+    public function setAttachedUser(?Users $attachedUser): self
+    {
+        $this->attachedUser = $attachedUser;
+
+        return $this;
+    }
+
+    public function getFacture(): ?string
+    {
+        return $this->facture;
+    }
+
+    public function setFacture(string $facture): self
+    {
+        $this->facture = $facture;
+
+        return $this;
     }
 }

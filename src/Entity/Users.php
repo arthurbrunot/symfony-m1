@@ -48,8 +48,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 150)]
     private $city;
 
-    #[ORM\Column(type: 'boolean')]
-    private $is_verified = false;
+    #[ORM\OneToMany(mappedBy: 'attachedUser', targetEntity: Order::class)]
+    private $orders;
 
     public function __construct()
     {
@@ -187,14 +187,32 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getIsVerified(): ?bool
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
     {
-        return $this->is_verified;
+        return $this->orders;
     }
 
-    public function setIsVerified(bool $is_verified): self
+    public function addOrder(Order $order): self
     {
-        $this->is_verified = $is_verified;
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setAttachedUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getAttachedUser() === $this) {
+                $order->setAttachedUser(null);
+            }
+        }
 
         return $this;
     }

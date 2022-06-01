@@ -20,8 +20,12 @@ class CartType extends AbstractType
             ->add('items', CollectionType::class, [
                 'entry_type' => CartItemType::class
             ])
-            ->add('save', SubmitType::class)
-            ->add('clear', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'label' => 'Mettre à jour'
+            ])
+            ->add('clear', SubmitType::class, [
+                'label' => 'Vider'
+            ]);
 
         $builder->addEventSubscriber(new RemoveCartItemListener());
         $builder->addEventSubscriber(new ClearCartListener());

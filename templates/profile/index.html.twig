@@ -1,50 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des produits de la catégorie {% endblock %}
+{% block title %}Mon compte {% endblock %}
 
 {% block body %}
-    <main class="container">
+    <main class="container mb-5">
         <section class="row">
-            <div class="col-12">
-                <h1>Liste des produits de la catégorie </h1>
+            <div class="col-12 my-4">
+                <h1>Bienvenue sur votre compte {{ app.user.firstname }}</h1>
+                <p>Vous êtes connecté en temps que {{ app.user.email }}</p>
             </div>
-            {% for order in orders %}
-                <div class="">
-                    <article class="card h-100">
-                        <div class="card-body">
-                            <h2 class="card-title">Commande n°{{ order.id }}</h2>
-                            <h4>Commande passée le {{ order.updatedAt|date("d/m/Y") }}</h4>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Article</th>
-                                    <th scope="col">ID Article</th>
-                                    <th scope="col">Quantité</th>
-                                    <th scope="col">Prix total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for orderItem in order.items %}
-                                    <tr>
-                                        <th scope="row">{{ loop.index }}</th>
-                                        <td>{{ orderItem.product.name }}</td>
-                                        <td>{{ orderItem.product.id }}</td>
-                                        <td>{{ orderItem.quantity }}</td>
-                                        <td>{{ orderItem.product.price * orderItem.quantity }} €</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title"><b>Total  : </b>{{ order.getTotal }} €</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+           {% if orders %}
+               {% for order in orders %}
+                   <div class="mb-3">
+                       <article class="card h-100">
+                           <div class="card-body">
+                               <div class="card-header bg-dark text-white d-flex align-items-center gap-5">
+                                   <h2 class="card-title m-0">Commande n°{{ order.id }}</h2>
+                                   <h4 class="m-0">Commande passée le {{ order.updatedAt|date("d/m/Y") }}</h4>
+                               </div>
+
+                               <table class="table">
+                                   <thead>
+                                   <tr>
+                                       <th scope="col">#</th>
+                                       <th scope="col">Article</th>
+                                       <th scope="col">ID Article</th>
+                                       <th scope="col">Quantité</th>
+                                       <th scope="col">Prix total</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   {% for orderItem in order.items %}
+                                       <tr>
+                                           <th scope="row">{{ loop.index }}</th>
+                                           <td>{{ orderItem.product.name }}</td>
+                                           <td>{{ orderItem.product.id }}</td>
+                                           <td>{{ orderItem.quantity }}</td>
+                                           <td>{{ orderItem.product.price * orderItem.quantity }} €</td>
+                                       </tr>
+                                   {% endfor %}
+                                   </tbody>
+                               </table>
+                               <div class="card" style="width: 18rem;">
+                                   <div class="card-body bg-primary text-white">
+                                       <h5 class="card-title m-0"><b>Total  : </b>{{ order.getTotal }} €</h5>
+                                   </div>
+                               </div>
+                           </div>
+                       </article>
+                   </div>
+               {% endfor %}
+            {% else  %}
+                <div class="alert alert-info">
+                    Vous n'avez passé aucune commande, rendez vous sur la <a href="{{ path('main') }}">page des produits</a>.
                 </div>
-            {% endfor %}
+            {% endif  %}
+
         </section>
     </main>
 {% endblock %}

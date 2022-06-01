@@ -15,14 +15,14 @@ class CategoriesFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $this->createCategory('Informatique', $manager);
-        $this->createCategory('Ordinateurs portables', $manager);
-        $this->createCategory('Ecrans', $manager);
-        $this->createCategory('Souris', $manager);
-        $this->createCategory('Mode', $manager);
-        $this->createCategory('Homme', $manager);
-        $this->createCategory('Femme', $manager);
-        $this->createCategory('Enfant', $manager);
+        $this->createCategory('Catalogue 1', $manager);
+        $this->createCategory('Catalogue 2', $manager);
+        $this->createCategory('Catalogue 3', $manager);
+        $this->createCategory('Catalogue 4', $manager);
+        $this->createCategory('Catalogue 5', $manager);
+        $this->createCategory('Catalogue 6', $manager);
+        $this->createCategory('Catalogue 7', $manager);
+        $this->createCategory('Catalogue 8', $manager);
                 
         $manager->flush();
     }

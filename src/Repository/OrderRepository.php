@@ -25,8 +25,10 @@ class OrderRepository extends ServiceEntityRepository
     public function findByUserId($value)
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.userId = :val')
+            ->andWhere('o.attachedUser = :val')
+            ->andWhere('o.status = :confirmed')
             ->setParameter('val', $value)
+            ->setParameter('confirmed', 'confirmed')
             ->orderBy('o.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()

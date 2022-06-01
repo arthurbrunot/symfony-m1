@@ -3,18 +3,18 @@
 {% block title %}Cart{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1>Your Cart</h1>
+    <div class="container mt-4  mb-5">
+        <h1 class="my-4">Mon panier</h1>
         {% if cart.items.count > 0 %}
             <div class="row mt-4">
                 <!-- List of items -->
                 <div class="col-md-8">
                     {{ form_start(form) }}
                     <div class="card">
-                        <div class="card-header bg-dark text-white d-flex">
-                            <h5>Items</h5>
-                            <div class="ml-auto">
-                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
+                        <div class="card-header bg-dark text-white d-flex align-items-center">
+                            <h5 style="margin:0">Produits dans le panier</h5>
+                            <div class="ml-auto mx-4">
+                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
                                 {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
                             </div>
                         </div>
@@ -22,7 +22,7 @@
                             {% for item in form.items %}
                                 <li class="list-group-item d-flex">
                                     <div class="flex-fill mr-2">
-                                        <img src="https://via.placeholder.com/200x150" width="64" alt="Product image">
+                                        <img src="{{ "https" in item.vars.data.product.image ? item.vars.data.product.image : asset('uploads/images/' ~ item.vars.data.product.image) }}" width="200" alt="Product image">
                                     </div>
                                     <div class="flex-fill mr-2">
                                         <h5 class="mt-0 mb-0">{{ item.vars.data.product.name }}</h5>
@@ -54,7 +54,7 @@
                 <div class="col-md-4">
                     {{ form_start(confirmForm) }}
                     <div class="card mt-4 mt-md-0">
-                        <h5 class="card-header bg-dark text-white">Summary</h5>
+                        <h5 class="card-header bg-dark text-white">Résumé</h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between">
                                 <div><b>Total</b></div>
@@ -62,7 +62,7 @@
                             </li>
                         </ul>
                         <div class="card-body">
-                            {{ form_widget(confirmForm.confirm, {'attr': {'class': 'btn btn-warning w-100'}}) }}
+                            {{ form_widget(confirmForm.confirm, {'attr': {'class': 'btn btn-primary w-100'}}) }}
                         </div>
                     </div>
                     {{ form_end(confirmForm, {'render_rest': true}) }}
@@ -70,7 +70,7 @@
             </div>
         {% else %}
             <div class="alert alert-info">
-                Your cart is empty. Go to the <a href="{{ path('main') }}">product list</a>.
+                Votre panier est vide. Rendez-vous sur <a href="{{ path('main') }}">le catalogue</a>.
             </div>
         {% endif %}
     </div>

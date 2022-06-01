@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container my-5">
+        <section class="row my-5">
+            {% if app.user %}
+                <div class="card h-100 bg-light">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'class': 'bg-light'}}) }}
+                        <div class="form-group">
+                            <label class="form-label">Nom du catalogue</label>
+                            {{ form_widget(form.name, {
+                                'attr': {
+                                    'class': 'form-control',
+                                }
+                            }) }}
+                        </div>
+                        {{ form_widget(form.add, {'attr': {'class': 'btn btn-primary w-40 mt-3'}}) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+        <section class="row">
+            {% if app.user %}
+                {% for catalogue in catalogues %}
+                    <div class="col-4 my-2">
+                        <div class="card h-100 bg-light">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ catalogue.name }}</h3>
+                                <a href="{{ path('admin_catalogue', {slug: catalogue.slug}) }}" class="btn btn-primary">Editer ce catalogue</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+           {% endif %}
+        </section>
+    </main>
+{% endblock %}

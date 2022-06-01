@@ -3,15 +3,16 @@
 {% block title %}Liste des produits de la catégorie {{ category.name }}{% endblock %}
 
 {% block body %}
-    <main class="container">
+    <main class="container mb-5">
         <section class="row">
-            <div class="col-12">
+            <div class="col-12 my-4">
                 <h1>Liste des produits de la catégorie {{ category.name }}</h1>
             </div>
             {% for product in products %}
                 <div class="col-3 mb-3">
-                    <article class="card h-100">
+                    <article class="card h-100 my-1">
                         <div class="card-body">
+                            <img class="img-thumbnail" src="{{ "https" in product.image ? product.image : asset('uploads/images/' ~ product.image) }}"/>
                             <h2 class="card-title">{{ product.name }}</h2>
                             <p class="card-text">{{ product.description }}</p>
                             <a href="/produits/{{ product.slug }}" class="btn btn-primary">Voir les détails</a>

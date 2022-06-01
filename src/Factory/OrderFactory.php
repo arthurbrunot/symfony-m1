@@ -34,7 +34,8 @@ class OrderFactory
             ->setStatus(Order::STATUS_CART)
             ->setCreatedAt(new \DateTime())
             ->setUpdatedAt(new \DateTime())
-            ->setUserId($user->id);
+        ->setAttachedUser($user);
+
 
         return $order;
     }

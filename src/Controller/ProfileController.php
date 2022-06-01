@@ -26,4 +26,5 @@ class ProfileController extends AbstractController
             'orders' => $order->findByUserId($this->getUser()->getId()),
         ]);
     }
+
 }

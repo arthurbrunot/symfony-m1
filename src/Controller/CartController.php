@@ -35,10 +35,10 @@ class CartController extends AbstractController
         }
 
         if($confirmForm->isSubmitted() && $confirmForm->isValid()) {
-            $cart->setStatus("confirm");
+            $cart->setStatus("confirmed");
             $cartManager->save($cart);
 
-            return $this->redirectToRoute('cart');
+            return $this->redirectToRoute('profile_orders');
         }
 
         return $this->render('cart/index.html.twig', [

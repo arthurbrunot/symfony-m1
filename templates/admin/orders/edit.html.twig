@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte {% endblock %}
+
+{% block body %}
+    <main class="container mb-5">
+        <section class="row my-5">
+            {% if app.user %}
+                <div class="card h-100 bg-light">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'class': 'bg-light'}}) }}
+                        <div class="form-group">
+                            {{ form_row(form.facture) }}
+                        </div>
+                        {{ form_widget(form.add, {'attr': {'class': 'btn btn-primary w-40 mt-3'}}) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}

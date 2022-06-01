@@ -17,13 +17,14 @@ class ProductsFixtures extends Fixture
         // use the factory to create a Faker\Generator instance
         $faker = Faker\Factory::create('fr_FR');
 
-        for($prod = 1; $prod <= 10; $prod++){
+        for($prod = 1; $prod <= 50; $prod++){
             $product = new Products();
             $product->setName($faker->text(15));
             $product->setDescription($faker->text());
             $product->setSlug($this->slugger->slug($product->getName())->lower());
-            $product->setPrice($faker->numberBetween(900, 150000));
+            $product->setPrice($faker->numberBetween(10, 100));
             $product->setStock($faker->numberBetween(0, 10));
+            $product->addImage('https://picsum.photos/id/'.$prod.'/640/360');
 
             //On va chercher une référence de catégorie
             $category = $this->getReference('cat-'. rand(1, 8));
