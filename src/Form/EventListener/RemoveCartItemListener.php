@@ -8,23 +8,12 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 /**
- * Class RemoveCartItemListener
- * @package App\Form\EventListener
+ * Class RemoveCartItemListener.
  */
 class RemoveCartItemListener implements EventSubscriberInterface
 {
     /**
-     * @inheritDoc
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [FormEvents::POST_SUBMIT => 'postSubmit'];
-    }
-
-    /**
      * Removes items from the cart based on the data sent from the user.
-     *
-     * @param FormEvent $event
      */
     public function postSubmit(FormEvent $event): void
     {
@@ -42,5 +31,13 @@ class RemoveCartItemListener implements EventSubscriberInterface
                 break;
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [FormEvents::POST_SUBMIT => 'postSubmit'];
     }
 }

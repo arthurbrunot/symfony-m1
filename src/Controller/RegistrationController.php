@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Form\RegistrationFormType;
-use App\Repository\UsersRepository;
 use App\Security\UsersAuthenticator;
 use App\Service\JWTService;
-use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +26,10 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
+                $userPasswordHasher->hashPassword(
+                $user,
+                $form->get('plainPassword')->getData()
+            )
             );
 
             $entityManager->persist($user);
@@ -42,12 +40,12 @@ class RegistrationController extends AbstractController
             // On crée le Header
             $header = [
                 'typ' => 'JWT',
-                'alg' => 'HS256'
+                'alg' => 'HS256',
             ];
 
             // On crée le Payload
             $payload = [
-                'user_id' => $user->getId()
+                'user_id' => $user->getId(),
             ];
 
             // On génère le token

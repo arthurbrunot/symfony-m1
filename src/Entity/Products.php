@@ -6,7 +6,6 @@ use App\Entity\Trait\CreatedAtTrait;
 use App\Entity\Trait\SlugTrait;
 use App\Repository\ProductsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
@@ -14,11 +13,6 @@ class Products
 {
     use CreatedAtTrait;
     use SlugTrait;
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     public $name;
@@ -29,15 +23,20 @@ class Products
     #[ORM\Column(type: 'integer')]
     public $price;
 
+    #[ORM\Column(type: 'text')]
+    public string $image;
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private $id;
+
     #[ORM\Column(type: 'integer')]
     private $stock;
 
     #[ORM\ManyToOne(targetEntity: Categories::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private $categories;
-
-    #[ORM\Column(type: 'text')]
-    public string $image;
 
     public function __construct()
     {
@@ -118,7 +117,6 @@ class Products
     public function addImage(string $image): self
     {
         $this->image = $image;
-
 
         return $this;
     }

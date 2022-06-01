@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service;
 
 use DateTimeImmutable;
@@ -8,19 +9,14 @@ class JWTService
     // On génère le token
 
     /**
-     * Génération du JWT
-     * @param array $header 
-     * @param array $payload 
-     * @param string $secret 
-     * @param int $validity 
-     * @return string 
+     * Génération du JWT.
      */
     public function generate(array $header, array $payload, string $secret, int $validity = 10800): string
     {
-        if($validity > 0){
+        if ($validity > 0) {
             $now = new DateTimeImmutable();
             $exp = $now->getTimestamp() + $validity;
-    
+
             $payload['iat'] = $now->getTimestamp();
             $payload['exp'] = $exp;
         }
@@ -48,14 +44,14 @@ class JWTService
         return $jwt;
     }
 
-    //On vérifie que le token est valide (correctement formé)
+    // On vérifie que le token est valide (correctement formé)
 
     public function isValid(string $token): bool
     {
-        return preg_match(
+        return 1 === preg_match(
             '/^[a-zA-Z0-9\-\_\=]+\.[a-zA-Z0-9\-\_\=]+\.[a-zA-Z0-9\-\_\=]+$/',
             $token
-        ) === 1;
+        );
     }
 
     // On récupère le Payload
@@ -65,7 +61,7 @@ class JWTService
         $array = explode('.', $token);
 
         // On décode le Payload
-        $payload = json_decode(base64_decode($array[1]), true);
+        $payload = json_decode(base64_decode($array[1], true), true);
 
         return $payload;
     }
@@ -77,7 +73,7 @@ class JWTService
         $array = explode('.', $token);
 
         // On décode le Header
-        $header = json_decode(base64_decode($array[0]), true);
+        $header = json_decode(base64_decode($array[0], true), true);
 
         return $header;
     }

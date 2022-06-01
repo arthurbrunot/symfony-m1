@@ -11,24 +11,23 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`order`')]
 class Order
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
-
-
-    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, cascade: ["persist", "remove"], orphanRemoval: true)]
-    private $items;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $status = self::STATUS_CART;
-
     /**
      * An order that is in progress, not placed yet.
      *
      * @var string
      */
-    const STATUS_CART = 'cart';
+    public const STATUS_CART = 'cart';
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private $id;
+
+    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private $items;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $status = self::STATUS_CART;
 
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
@@ -42,7 +41,6 @@ class Order
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $facture;
 
-
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -52,7 +50,6 @@ class Order
     {
         return $this->id;
     }
-
 
     /**
      * @return Collection|OrderItem[]
@@ -70,6 +67,7 @@ class Order
                 $existingItem->setQuantity(
                     $existingItem->getQuantity() + $item->getQuantity()
                 );
+
                 return $this;
             }
         }
@@ -114,6 +112,7 @@ class Order
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -143,8 +142,6 @@ class Order
 
     /**
      * Calculates the order total.
-     *
-     * @return float
      */
     public function getTotal(): float
     {

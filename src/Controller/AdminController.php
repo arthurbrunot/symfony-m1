@@ -5,11 +5,9 @@ namespace App\Controller;
 use App\Entity\Categories;
 use App\Entity\Order;
 use App\Entity\Products;
-use App\Form\AddToCartType;
 use App\Form\AttachFactureToOrderType;
 use App\Form\CategoryType;
 use App\Form\ProductType;
-use App\Manager\CartManager;
 use App\Repository\CategoriesRepository;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,7 +41,7 @@ class AdminController extends AbstractController
 
         return $this->render('admin/products/index.html.twig', [
             'catalogues' => $categoriesRepository->findAll(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -72,7 +70,7 @@ class AdminController extends AbstractController
             if ($image) {
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
 
                 try {
                     $image->move(
@@ -88,13 +86,12 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
 
-
         $products = $category->getProducts();
 
         return $this->render('admin/products/details.html.twig', [
             'category' => $category,
             'products' => $products,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -103,9 +100,10 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/orders/index.html.twig', [
             'controller_name' => 'Commandes des cliens',
-            'orders' => $orders->findAll()
+            'orders' => $orders->findAll(),
         ]);
     }
+
     #[Route('/commandes/{id}', name: 'commandes_edit')]
     public function orderReceipt(Order $order, OrderRepository $orders, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -125,7 +123,7 @@ class AdminController extends AbstractController
                 $originalFilename = pathinfo($facture->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$facture->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $facture->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -151,7 +149,7 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/orders/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

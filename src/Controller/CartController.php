@@ -11,13 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class CartController
- * @package App\Controller
+ * Class CartController.
  */
 class CartController extends AbstractController
 {
     #[Route('/cart', name: 'cart')]
-
     public function index(CartManager $cartManager, Request $request): Response
     {
         $cart = $cartManager->getCurrentCart();
@@ -34,8 +32,8 @@ class CartController extends AbstractController
             return $this->redirectToRoute('cart');
         }
 
-        if($confirmForm->isSubmitted() && $confirmForm->isValid()) {
-            $cart->setStatus("confirmed");
+        if ($confirmForm->isSubmitted() && $confirmForm->isValid()) {
+            $cart->setStatus('confirmed');
             $cartManager->save($cart);
 
             return $this->redirectToRoute('profile_orders');
@@ -44,7 +42,7 @@ class CartController extends AbstractController
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
             'form' => $form->createView(),
-            'confirmForm' => $confirmForm->createView()
+            'confirmForm' => $confirmForm->createView(),
         ]);
     }
 }

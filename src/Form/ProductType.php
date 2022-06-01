@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Order;
 use App\Entity\Products;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -31,13 +30,12 @@ class ProductType extends AbstractType
                             'image/png',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image',
-                    ])
+                    ]),
                 ],
             ])
             ->add('add', SubmitType::class, [
-                'label' => 'Ajouter au catalogue'
+                'label' => 'Ajouter au catalogue',
             ]);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

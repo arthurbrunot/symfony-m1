@@ -35,11 +35,11 @@ class AttachFactureToOrderType extends AbstractType
                             'application/x-pdf',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])
+                    ]),
                 ],
             ])
             ->add('add', SubmitType::class, [
-                'label' => 'Confirmer'
+                'label' => 'Confirmer',
             ]);
     }
 

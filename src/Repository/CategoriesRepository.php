@@ -9,8 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @method Categories|null find($id, $lockMode = null, $lockVersion = null)
  * @method Categories|null findOneBy(array $criteria, array $orderBy = null)
- * @method Categories[]    findAll()
- * @method Categories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Categories[] findAll()
+ * @method Categories[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CategoriesRepository extends ServiceEntityRepository
 {

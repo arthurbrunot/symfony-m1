@@ -14,7 +14,7 @@ class AddToCartType extends AbstractType
     {
         $builder->add('quantity');
         $builder->add('add', SubmitType::class, [
-            'label' => 'Ajouter au panier'
+            'label' => 'Ajouter au panier',
         ]);
     }
 

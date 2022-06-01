@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class CartSessionStorage
 {
     /**
+     * @var string
+     */
+    public const CART_KEY_NAME = 'cart_id';
+
+    /**
      * The request stack.
      *
      * @var RequestStack
@@ -24,15 +29,7 @@ class CartSessionStorage
     private $cartRepository;
 
     /**
-     * @var string
-     */
-    const CART_KEY_NAME = 'cart_id';
-
-    /**
      * CartSessionStorage constructor.
-     *
-     * @param RequestStack $requestStack
-     * @param OrderRepository $cartRepository
      */
     public function __construct(RequestStack $requestStack, OrderRepository $cartRepository)
     {
@@ -42,21 +39,17 @@ class CartSessionStorage
 
     /**
      * Gets the cart in session.
-     *
-     * @return Order|null
      */
     public function getCart(): ?Order
     {
         return $this->cartRepository->findOneBy([
             'id' => $this->getCartId(),
-            'status' => Order::STATUS_CART
+            'status' => Order::STATUS_CART,
         ]);
     }
 
     /**
      * Sets the cart in session.
-     *
-     * @param Order $cart
      */
     public function setCart(Order $cart): void
     {
@@ -65,8 +58,6 @@ class CartSessionStorage
 
     /**
      * Returns the cart id.
-     *
-     * @return int|null
      */
     private function getCartId(): ?int
     {

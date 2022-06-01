@@ -10,17 +10,7 @@ use Symfony\Component\Form\FormEvents;
 class ClearCartListener implements EventSubscriberInterface
 {
     /**
-     * @inheritDoc
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [FormEvents::POST_SUBMIT => 'postSubmit'];
-    }
-
-    /**
      * Removes all items from the cart when the clear button is clicked.
-     *
-     * @param FormEvent $event
      */
     public function postSubmit(FormEvent $event): void
     {
@@ -38,5 +28,13 @@ class ClearCartListener implements EventSubscriberInterface
 
         // Clears the cart
         $cart->removeItems();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [FormEvents::POST_SUBMIT => 'postSubmit'];
     }
 }

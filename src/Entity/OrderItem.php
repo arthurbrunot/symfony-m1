@@ -73,10 +73,6 @@ class OrderItem
 
     /**
      * Tests if the given item given corresponds to the same order item.
-     *
-     * @param OrderItem $item
-     *
-     * @return bool
      */
     public function equals(OrderItem $item): bool
     {
