@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,10 +19,11 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/commandes', name: 'orders')]
-    public function orders(): Response
+    public function orders(OrderRepository $order): Response
     {
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'Commandes de l\'utilisateur',
+            'orders' => $order->findByUserId($this->getUser()->getId()),
         ]);
     }
 }

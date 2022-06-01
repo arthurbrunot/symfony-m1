@@ -1,20 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}Liste des produits de la catégorie {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/benoit/Documents/Demos/ecommerce-sf6/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/benoit/Documents/Demos/ecommerce-sf6/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <main class="container">
+        <section class="row">
+            <div class="col-12">
+                <h1>Liste des produits de la catégorie </h1>
+            </div>
+            {% for order in orders %}
+                <div class="">
+                    <article class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Commande n°{{ order.id }}</h2>
+                            <h4>Commande passée le {{ order.updatedAt|date("d/m/Y") }}</h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Article</th>
+                                    <th scope="col">ID Article</th>
+                                    <th scope="col">Quantité</th>
+                                    <th scope="col">Prix total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for orderItem in order.items %}
+                                    <tr>
+                                        <th scope="row">{{ loop.index }}</th>
+                                        <td>{{ orderItem.product.name }}</td>
+                                        <td>{{ orderItem.product.id }}</td>
+                                        <td>{{ orderItem.quantity }}</td>
+                                        <td>{{ orderItem.product.price * orderItem.quantity }} €</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Total  : </b>{{ order.getTotal }} €</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
 {% endblock %}

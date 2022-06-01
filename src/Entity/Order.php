@@ -16,6 +16,9 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\Column(type: 'integer')]
+    public ?int $userId;
+
     #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, cascade: ["persist", "remove"], orphanRemoval: true)]
     private $items;
 
@@ -43,6 +46,17 @@ class Order
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $userId): self
+    {
+        $this->userId = $userId;
+        return $this;
     }
 
     /**
@@ -105,7 +119,6 @@ class Order
     public function setStatus(string $status): self
     {
         $this->status = $status;
-
         return $this;
     }
 

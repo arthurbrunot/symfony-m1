@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\CartType;
+use App\Form\ConfirmOrderType;
 use App\Manager\CartManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,8 @@ class CartController extends AbstractController
 
         $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
+        $confirmForm = $this->createForm(ConfirmOrderType::class, $cart);
+        $confirmForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $cart->setUpdatedAt(new \DateTime());
@@ -31,9 +34,17 @@ class CartController extends AbstractController
             return $this->redirectToRoute('cart');
         }
 
+        if($confirmForm->isSubmitted() && $confirmForm->isValid()) {
+            $cart->setStatus("confirm");
+            $cartManager->save($cart);
+
+            return $this->redirectToRoute('cart');
+        }
+
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'confirmForm' => $confirmForm->createView()
         ]);
     }
 }

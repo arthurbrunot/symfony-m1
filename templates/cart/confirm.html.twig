@@ -6,10 +6,11 @@
     <div class="container mt-4">
         <h1>Your Cart</h1>
         {% if cart.items.count > 0 %}
+            {{ form_start(form) }}
+
             <div class="row mt-4">
                 <!-- List of items -->
                 <div class="col-md-8">
-                    {{ form_start(form) }}
                     <div class="card">
                         <div class="card-header bg-dark text-white d-flex">
                             <h5>Items</h5>
@@ -48,11 +49,9 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    {{ form_end(form, {'render_rest': false}) }}
                 </div>
                 <!-- Summary -->
                 <div class="col-md-4">
-                    {{ form_start(confirmForm) }}
                     <div class="card mt-4 mt-md-0">
                         <h5 class="card-header bg-dark text-white">Summary</h5>
                         <ul class="list-group list-group-flush">
@@ -62,12 +61,12 @@
                             </li>
                         </ul>
                         <div class="card-body">
-                            {{ form_widget(confirmForm.confirm, {'attr': {'class': 'btn btn-warning w-100'}}) }}
+                            {{ form_widget(form.confirm, {'attr': {'class': 'btn btn-warning w-100'}}) }}
                         </div>
                     </div>
-                    {{ form_end(confirmForm, {'render_rest': true}) }}
                 </div>
             </div>
+            {{ form_end(form, {'render_rest': false}) }}
         {% else %}
             <div class="alert alert-info">
                 Your cart is empty. Go to the <a href="{{ path('main') }}">product list</a>.
